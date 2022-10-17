@@ -1,8 +1,10 @@
-﻿namespace Faker.Interfaces
+﻿using Faker.Context;
+
+namespace Faker.Interfaces
 {
     public interface IValueGenerator
     {
-        object Generate(Type type);
+        object Generate(Type typeToGenerate, GeneratorContext context);
         bool CanGenerate(Type type);
     }
 }
