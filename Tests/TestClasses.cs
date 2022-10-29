@@ -5,21 +5,24 @@
         public string NameOfProduct { get; set; }
         public int Number { get; set; }
         public bool isPopular = false;
+        public Uri ProductUri { get; set; }
         public List<Product> Products;
 
-        public Product(string name, int num, bool flag, List<Product> products)
+        public Product(string name, int num, bool flag, Uri productUri, List<Product> products)
         {
             NameOfProduct = name;
             Number = num;
             isPopular = flag;
             Products = products;
+            ProductUri = productUri;
         }
 
-        public Product(string name, int num, bool flag)
+        public Product(string name, int num, bool flag, Uri productUri)
         {
             this.NameOfProduct = name;
             this.Number = num;
             this.isPopular = flag;
+            this.ProductUri = productUri;
         }
 
         private Product()

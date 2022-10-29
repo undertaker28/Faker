@@ -13,7 +13,7 @@
             }
             else
             {
-                _nestingCounter.Add(type, 0);
+                _nestingCounter.Add(type, 1);
             }
 
             return _nestingCounter[type] >= maxNestingLevel;

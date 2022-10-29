@@ -1,6 +1,9 @@
 using Faker.Core;
 using Faker.Interfaces;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using NUnit.Framework.Internal;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Tests
 {
@@ -28,6 +31,7 @@ namespace Tests
         [TestCase(typeof(long))]
         [TestCase(typeof(string))]
         [TestCase(typeof(short))]
+        [TestCase(typeof(Uri))]
         public void CreateSimpleType(Type type)
         {
             Assert.That(_faker.Create(type), Is.Not.EqualTo(ObjectInitor.GetDefaultValue(type)));
@@ -43,6 +47,22 @@ namespace Tests
                 Assert.That(poly.Name, Is.Not.EqualTo(ObjectInitor.GetDefaultValue(poly.Name.GetType())));
                 Assert.That(poly.IsPentagon, Is.Not.EqualTo(ObjectInitor.GetDefaultValue(poly.IsPentagon.GetType())));
             });
+        }
+
+        [Test]
+        public void CreateURI()
+        {
+            Product product = _faker.Create<Product>();
+            Assert.That(product.ProductUri, Is.Not.EqualTo(ObjectInitor.GetDefaultValue(product.ProductUri.GetType())));
+        }
+
+        [Test]
+        public void CheckCorrectnessURI()
+        {
+            Product product = _faker.Create<Product>();
+            string Pattern = @"^(?:(ht|f)tp(s?):\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            Regex Rgx = new(Pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Assert.That(Rgx.IsMatch(product.ProductUri.ToString()), Is.True);
         }
 
         [Test]

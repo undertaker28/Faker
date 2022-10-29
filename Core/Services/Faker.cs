@@ -1,4 +1,6 @@
-﻿using Faker.Context;
+﻿using Core.Generators;
+using Faker.Context;
+using Faker.Generators;
 using Faker.Interfaces;
 
 namespace Faker.Core
@@ -6,10 +8,25 @@ namespace Faker.Core
     public class Faker : IFaker
     {
         private readonly GeneratorContext _generatorContext;
-        private readonly List<IValueGenerator> _valueGenerators;
-        private readonly CyclicChecker _cyclicChecker = new();
+        private readonly List<IValueGenerator> _valueGenerators = new List<IValueGenerator> {
+                new BoolGenerator(),
+                new ByteGenerator(),
+                new CharGenerator(),
+                new DateTimeGenerator(),
+                new DecimalGenerator(),
+                new DoubleGenerator(),
+                new FloatGenerator(),
+                new IntGenerator(),
+                new ListGenerator(),
+                new LongGenerator(),
+                new ShortGenerator(),
+                new StringGenerator(),
+                new URIGenerator(),
+            };
 
-        public Faker()
+    private readonly CyclicChecker _cyclicChecker = new();
+
+    public Faker()
         {
             _generatorContext = new GeneratorContext(new Random(), this);
             _valueGenerators = GetAllGeneratorsFromAssembly();
